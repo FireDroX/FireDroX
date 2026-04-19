@@ -34,7 +34,11 @@
 ## 🌐 Portfolio
 <div align="center">
   <a href="https://portfolio.addrien.fr">
-    <img src="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=midnight-purple&hide_border=true" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=dark&hide_border=true" />
+      <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=graywhite&hide_border=true" />
+      <img alt="Portfolio Card" src="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=dark&hide_border=true" />
+    </picture>
   </a>  
 </div>
 
