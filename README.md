@@ -19,10 +19,14 @@
 
 ---
 
-## 🧠 Activity Graph
+## 🐍 Activity Snake
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=FireDroX&theme=react-dark&bg_color=0D1117&color=A970FF&line=A970FF&point=FFFFFF&hide_border=true" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/FireDroX/FireDroX/blob/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/FireDroX/FireDroX/blob/output/github-snake.svg" />
+    <img alt="github-snake" src="https://github.com/FireDroX/FireDroX/blob/output/github-snake.svg" />
+  </picture>
 </p>
 
 ---
