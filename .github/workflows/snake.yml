@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Snake Animation
-      - uses: Platane/snk@3
+      - uses: Platane/snk@v3
         with:
           github_user_name: FireDroX
           outputs: |
