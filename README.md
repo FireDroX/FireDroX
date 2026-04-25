@@ -42,11 +42,17 @@
   </a>  
 </div>
 
-<p align="right">
+<div align="right">
   <a href="https://linkedin.com/in/adrien-pourlier">
     <img src="https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?logo=linkedin-white&logoColor=fff" />
   </a>
   <a href="https://portfolio.addrien.fr">
     <img src="https://img.shields.io/badge/Portfolio-%2320232a.svg?logo=react&logoColor=%2361DAFB" />
   </a>
-</p>
+</div>
+
+<div align="right">
+  <a href='https://ko-fi.com/G2G01YFONH' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+</div>
