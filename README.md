@@ -33,7 +33,7 @@
 
 ## 🌐 Portfolio
 <div align="center">
-  <a href="https://portfolio.addrien.fr">
+  <a href="https://portfolio.addrien.fr/?utm_source=github">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=dark&hide_border=true" />
       <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=graywhite&hide_border=true" />
@@ -46,7 +46,7 @@
   <a href="https://linkedin.com/in/adrien-pourlier">
     <img src="https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?logo=linkedin-white&logoColor=fff" />
   </a>
-  <a href="https://portfolio.addrien.fr">
+  <a href="https://portfolio.addrien.fr/?utm_source=github">
     <img src="https://img.shields.io/badge/Portfolio-%2320232a.svg?logo=react&logoColor=%2361DAFB" />
   </a>
 </div>
