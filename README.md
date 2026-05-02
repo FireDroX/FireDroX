@@ -35,9 +35,9 @@
 <div align="center">
   <a href="https://portfolio.addrien.fr/?utm_source=github">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=dark&hide_border=true" />
-      <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=graywhite&hide_border=true" />
-      <img alt="Portfolio Card" src="https://github-readme-stats.vercel.app/api/pin?username=FireDroX&repo=dynamic-portfolio&theme=dark&hide_border=true" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/FireDroX/FireDroX/blob/pined/pin-portfolio-dark.svg" />
+      <source media="(prefers-color-scheme: light)" srcset="https://github.com/FireDroX/FireDroX/blob/pined/pin-portfolio.svg" />
+      <img alt="Portfolio Card" src="https://github.com/FireDroX/FireDroX/blob/pined/pin-portfolio-dark.svg" />
     </picture>
   </a>  
 </div>
