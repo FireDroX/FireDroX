@@ -1,58 +1,82 @@
 <h1 align="center">Hello There !</h1>
-<h3 align="center">💻 Full-Stack Developer | Student | Actively looking for opportunities</h3>
+<h3 align="center"><a href="https://github.com/FireDroX">@FireDroX</a> - Développeur Full-Stack · Étudiant · Ouvert aux opportunités 🚀</h3>
 
 ---
 
-## 🚀 About Me
-- 🔭 Currently looking for a **job opportunity**
-- 🌱 Always learning and improving my skills
-- 💡 Passionate about building web apps & creative projects
-- 🎯 Goal: Work on impactful and scalable products
+## 🚀 À propos de moi
+
+<table border="0">
+  <tr>
+    <td align="left" valign="middle">
+      <ul> 
+        <li>🔭 Actuellement à la recherche d'une <strong>opportunité professionnelle</strong></li>
+        <li>🌱 J'apprends et j'améliore continuellement mes compétences</li>
+        <li>💡 Passionné par la création d'applications web complètes, du cahier des charges jusqu'à la mise en prod</li>
+        <li>🎯 Objectif : travailler sur des projets concrets, ambitieux et scalables</li>
+        <li>🧩 J'aime construire des systèmes "de A à Z" : auth, rôles, API, dashboards, bots Discord...</li>
+      <ul>
+    </td>
+    <td align="right" valign="middle">
+      <img
+        src="https://gitfut.com/FireDroX.png"
+        alt="GitFut"
+        height="150"
+      />
+    </td>
+  </tr>
+</table>
 
 ---
 
 ## 🛠️ Tech Stack
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=c,html,css,react,nodejs,express,mysql,postgres,docker,aws,git,github,figma&theme=dark" />
+  <img src="https://skillicons.dev/icons?i=c,html,css,react,nodejs,express,php,mysql,postgres,docker,aws,git,github,figma&theme=dark" />
 </p>
 
 ---
 
-## 🐍 Activity Snake
+## 📌 Projets phares
+
+### 🥤 [Monster Energy](https://github.com/FireDroX/energy)
+
+Application web de gestion et de notation d'une collection de boissons **Monster Energy**, développée en binôme.
+- Carrousel interactif filtrable par tags (Ultra, Juice, Nitro, Reserve, Dragon Tea...)
+- Système de notes, likes, commentaires avec réponses et réactions
+- Chat semi temps-réel avec GIFs (API Tenor) et modération
+- Rôles utilisateurs : `user`, `contributor`, `admin`
+- Système d'achievements avec skins de pseudo débloquables (easter eggs)
+
+`PHP` · `MariaDB` · `Bootstrap 5`
+
+---
+ 
+### 🎨 [Dynamic Portfolio](https://github.com/FireDroX/dynamic-portfolio)
+Portfolio dynamique permettant d'héberger et de tester des mini-projets web directement en ligne via des **iframes**, avec panel d'administration sécurisé.
+- Page d'accueil mettant en avant les 3 meilleurs projets
+- Catalogue complet + fiche projet avec iframe
+- Panel admin protégé : ajout / suppression de projets, upload en `.zip`
+- Page `/achievements` avec easter eggs
+`React.js` · `Node.js` · `Express` · `MySQL`
+
+---
+
+## 🐍 Activité
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/FireDroX/FireDroX/blob/output/github-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/FireDroX/FireDroX/blob/output/github-snake.svg" />
-    <img alt="github-snake" src="https://github.com/FireDroX/FireDroX/blob/output/github-snake.svg" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/FireDroX/FireDroX/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/FireDroX/FireDroX/output/github-snake.svg" />
+    <img alt="github-snake" src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/github-snake.svg" />
   </picture>
 </p>
 
 ---
-
-## 🌐 Portfolio
-<div align="center">
-  <a href="https://portfolio.addrien.fr/?utm_source=github">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/FireDroX/FireDroX/blob/pined/pin-portfolio-dark.svg" />
-      <source media="(prefers-color-scheme: light)" srcset="https://github.com/FireDroX/FireDroX/blob/pined/pin-portfolio.svg" />
-      <img alt="Portfolio Card" src="https://github.com/FireDroX/FireDroX/blob/pined/pin-portfolio-dark.svg" />
-    </picture>
-  </a>  
-</div>
-
-<div align="right">
-  <a href="https://linkedin.com/in/adrien-pourlier">
-    <img src="https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?logo=linkedin-white&logoColor=fff" />
-  </a>
-  <a href="https://portfolio.addrien.fr/?utm_source=github">
-    <img src="https://img.shields.io/badge/Portfolio-%2320232a.svg?logo=react&logoColor=%2361DAFB" />
-  </a>
-</div>
-
-<div align="right">
-  <a href='https://ko-fi.com/G2G01YFONH' target='_blank'>
-    <img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' />
-  </a>
-</div>
+ 
+## 🌐 Me retrouver
+ 
+<p align="center">
+<a href="https://portfolio.addrien.fr/?utm_source=github"><img src="https://img.shields.io/badge/Portfolio-6DAFB?style=for-the-badge&logo=react&logoColor=white" /></a>
+<a href="https://linkedin.com/in/adrien-pourlier"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+<a href="https://ko-fi.com/G2G01YFONH"><img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" /></a>
+</p>
