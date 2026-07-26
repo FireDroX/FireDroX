@@ -17,11 +17,13 @@
       <ul>
     </td>
     <td align="right" valign="middle">
-      <img
-        src="https://gitfut.com/FireDroX.png"
-        alt="GitFut"
-        height="150"
-      />
+      <a href="https://gitfut.com/FireDroX">
+        <img
+          src="https://raw.githubusercontent.com/FireDroX/FireDroX/gitfut/FireDroX.png"
+          alt="GitFut"
+          height="150"
+        />
+      </a>
     </td>
   </tr>
 </table>
