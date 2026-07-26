@@ -1,0 +1,184 @@
+name: Mettre à jour l'image GitFut
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "55 17 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-gitfut-image
+  cancel-in-progress: true
+
+jobs:
+  update-image:
+    runs-on: ubuntu-latest
+
+    env:
+      GITFUT_USERNAME: FireDroX
+      IMAGE_PATH: assets/gitfut.png
+      GITFUT_REPOSITORY: https://github.com/Younesfdj/gitfut.git
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Créer ou récupérer la branche gitfut
+        shell: bash
+        run: |
+          if git ls-remote --exit-code --heads origin gitfut; then
+            echo "La branche gitfut existe déjà."
+
+            git fetch origin gitfut
+            git checkout -B gitfut origin/gitfut
+          else
+            echo "Création de la branche gitfut."
+
+            git checkout -b gitfut
+          fi
+
+      - name: Créer le dossier de l'image
+        shell: bash
+        run: |
+          mkdir -p "$(dirname "$IMAGE_PATH")"
+
+      - name: Essayer le serveur GitFut officiel
+        id: official
+        continue-on-error: true
+        shell: bash
+        run: |
+          curl \
+            --fail \
+            --location \
+            --silent \
+            --show-error \
+            --connect-timeout 10 \
+            --max-time 30 \
+            --retry 2 \
+            "https://gitfut.com/${GITFUT_USERNAME}.png" \
+            --output "${IMAGE_PATH}.tmp"
+
+          MIME_TYPE=$(file --brief --mime-type "${IMAGE_PATH}.tmp")
+
+          if [ "$MIME_TYPE" != "image/png" ]; then
+            echo "Le serveur officiel n'a pas retourné une image PNG."
+            rm -f "${IMAGE_PATH}.tmp"
+            exit 1
+          fi
+
+          mv "${IMAGE_PATH}.tmp" "$IMAGE_PATH"
+
+      - name: Cloner GitFut en secours
+        if: steps.official.outcome == 'failure'
+        shell: bash
+        run: |
+          echo "Le serveur officiel est indisponible."
+          echo "Génération depuis le dépôt GitFut..."
+
+          git clone \
+            --depth 1 \
+            "$GITFUT_REPOSITORY" \
+            /tmp/gitfut
+
+      - name: Installer Node.js
+        if: steps.official.outcome == 'failure'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: /tmp/gitfut/package-lock.json
+
+      - name: Installer et compiler GitFut
+        if: steps.official.outcome == 'failure'
+        working-directory: /tmp/gitfut
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Démarrer GitFut localement
+        if: steps.official.outcome == 'failure'
+        working-directory: /tmp/gitfut
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PORT: 3000
+        run: |
+          npm start > /tmp/gitfut.log 2>&1 &
+          echo $! > /tmp/gitfut.pid
+
+          for attempt in {1..30}; do
+            if curl \
+              --fail \
+              --silent \
+              "http://127.0.0.1:3000/${GITFUT_USERNAME}.png" \
+              --output /tmp/gitfut-test.png
+            then
+              echo "GitFut est démarré."
+              rm -f /tmp/gitfut-test.png
+              exit 0
+            fi
+
+            sleep 2
+          done
+
+          echo "Impossible de démarrer GitFut."
+          cat /tmp/gitfut.log
+          exit 1
+
+      - name: Générer l'image depuis GitFut local
+        if: steps.official.outcome == 'failure'
+        shell: bash
+        run: |
+          curl \
+            --fail \
+            --location \
+            --silent \
+            --show-error \
+            "http://127.0.0.1:3000/${GITFUT_USERNAME}.png" \
+            --output "${IMAGE_PATH}.tmp"
+
+          MIME_TYPE=$(file --brief --mime-type "${IMAGE_PATH}.tmp")
+
+          if [ "$MIME_TYPE" != "image/png" ]; then
+            echo "La génération locale n'a pas produit de PNG."
+            cat /tmp/gitfut.log
+            rm -f "${IMAGE_PATH}.tmp"
+            exit 1
+          fi
+
+          mv "${IMAGE_PATH}.tmp" "$IMAGE_PATH"
+
+      - name: Arrêter le serveur local
+        if: always() && steps.official.outcome == 'failure'
+        shell: bash
+        run: |
+          if [ -f /tmp/gitfut.pid ]; then
+            kill "$(cat /tmp/gitfut.pid)" 2>/dev/null || true
+          fi
+
+      - name: Committer l'image sur la branche gitfut
+        shell: bash
+        run: |
+          git add "$IMAGE_PATH"
+
+          if git diff --cached --quiet; then
+            echo "L'image GitFut n'a pas changé."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "chore: mise à jour de l'image GitFut"
+
+          git push --set-upstream origin gitfut
