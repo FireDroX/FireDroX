@@ -19,7 +19,7 @@ jobs:
 
     env:
       GITFUT_USERNAME: FireDroX
-      IMAGE_PATH: assets/gitfut.png
+      OUTPUT_FILE: /tmp/FireDroX.png
       GITFUT_REPOSITORY: https://github.com/Younesfdj/gitfut.git
 
     steps:
@@ -61,7 +61,7 @@ jobs:
             --connect-timeout 10 \
             --max-time 30 \
             --retry 2 \
-            "https://gitfut.com/${GITFUT_USERNAME}.png" \
+            "https://gitfutt.com/${GITFUT_USERNAME}.png" \
             --output "${IMAGE_PATH}.tmp"
 
           MIME_TYPE=$(file --brief --mime-type "${IMAGE_PATH}.tmp")
@@ -165,20 +165,52 @@ jobs:
             kill "$(cat /tmp/gitfut.pid)" 2>/dev/null || true
           fi
 
-      - name: Committer l'image sur la branche gitfut
+      - name: Publier uniquement l'image sur la branche gitfut
         shell: bash
         run: |
-          git add "$IMAGE_PATH"
-
-          if git diff --cached --quiet; then
-            echo "L'image GitFut n'a pas changé."
-            exit 0
+          set -e
+      
+          if [ ! -f "$OUTPUT_FILE" ]; then
+            echo "Erreur : l'image générée est introuvable."
+            exit 1
           fi
-
+      
           git config user.name "github-actions[bot]"
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git commit -m "chore: mise à jour de l'image GitFut"
-
+      
+          # Si la branche existe déjà, on la récupère
+          if git ls-remote \
+            --exit-code \
+            --heads origin gitfut > /dev/null 2>&1
+          then
+            echo "Récupération de la branche gitfut existante."
+      
+            git fetch origin gitfut
+            git switch --force-create gitfut origin/gitfut
+      
+            # Supprime tous les anciens fichiers suivis
+            git rm -rf --ignore-unmatch .
+          else
+            echo "Création d'une branche orpheline gitfut."
+      
+            # Branche sans parent et sans fichiers venant de main
+            git switch --orphan gitfut
+          fi
+      
+          # Supprime aussi les éventuels fichiers non suivis
+          git clean -fdx
+      
+          # La branche ne contiendra que ce fichier
+          cp "$OUTPUT_FILE" ./FireDroX.png
+      
+          git add -A
+      
+          if git diff --cached --quiet; then
+            echo "L'image n'a pas changé."
+            exit 0
+          fi
+      
+          git commit -m "chore: update GitFut image"
+      
           git push --set-upstream origin gitfut
