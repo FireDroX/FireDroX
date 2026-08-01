@@ -59,6 +59,7 @@ Portfolio dynamique permettant d'héberger et de tester des mini-projets web dir
 - Catalogue complet + fiche projet avec iframe
 - Panel admin protégé : ajout / suppression de projets, upload en `.zip`
 - Page `/achievements` avec easter eggs
+
 `React.js` · `Node.js` · `Express` · `MySQL`
 
 ---
