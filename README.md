@@ -79,7 +79,8 @@ Portfolio dynamique permettant d'héberger et de tester des mini-projets web dir
 ## 🌐 Me retrouver
  
 <p align="center">
-<a href="https://portfolio.addrien.fr/?utm_source=github"><img src="https://img.shields.io/badge/Portfolio-6DAFB?style=for-the-badge&logo=react&logoColor=white" /></a>
-<a href="https://linkedin.com/in/adrien-pourlier"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-<a href="https://ko-fi.com/G2G01YFONH"><img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" /></a>
+  <a href="https://portfolio.addrien.fr/?utm_source=github"><img src="https://img.shields.io/badge/Portfolio-b29a80?style=for-the-badge&logo=react&logoColor=white" /></a>
+  <a href="https://linkedin.com/in/adrien-pourlier"><img src="https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin-white&logoColor=fff" /></a>
+  <a href="https://ko-fi.com/G2G01YFONH"><img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" /></a>
+  <a href="https://fr.fiverr.com/s/GzV441Z"><img src="https://img.shields.io/badge/Fiverr-00b22d?style=for-the-badge&logo=fiverr&logoColor=white" /></a>
 </p>
