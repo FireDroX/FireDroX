@@ -40,16 +40,15 @@
 
 ## 📌 Projets phares
 
-### 🥤 [Monster Energy](https://github.com/FireDroX/energy)
+### 📚 [OpenWiki](https://github.com/FireDroX/openwiki)
+Wiki collaboratif auto-hébergé (clone de WikiJS) avec gestion de versions, pièces jointes et rôles utilisateurs.
+- Arborescence de pages multi-niveaux avec historique append-only et rollback
+- Éditeur Markdown (rendu HTML sécurisé, collapsibles `<details>`)
+- Gestion des médias via Minio (S3-compatible), accès par URLs présignées
+- Rôles `admin` / `editor` / `reader`, pages publiques ou privées
+- Serveur MCP intégré permettant à un assistant IA (Claude) de piloter le wiki (pages, recherche, médias, utilisateurs) via des clés API dédiées et un audit log des actions
 
-Application web de gestion et de notation d'une collection de boissons **Monster Energy**, développée en binôme.
-- Carrousel interactif filtrable par tags (Ultra, Juice, Nitro, Reserve, Dragon Tea...)
-- Système de notes, likes, commentaires avec réponses et réactions
-- Chat semi temps-réel avec GIFs (API Tenor) et modération
-- Rôles utilisateurs : `user`, `contributor`, `admin`
-- Système d'achievements avec skins de pseudo débloquables (easter eggs)
-
-`PHP` · `MariaDB` · `Bootstrap 5`
+`Nest` · `TypeORM` · `TypeScript` · `React` · `TailwindCSS` · `shadcn` · `MySQL` · `Minio`
 
 ---
  
