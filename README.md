@@ -40,7 +40,7 @@
 
 ## 📌 Projets phares
 
-### 📚 [OpenWiki](https://github.com/FireDroX/openwiki)
+### 📚 [NestWiki](https://github.com/FireDroX/nestwiki)
 Wiki collaboratif auto-hébergé (clone de WikiJS) avec gestion de versions, pièces jointes et rôles utilisateurs.
 - Arborescence de pages multi-niveaux avec historique append-only et rollback
 - Éditeur Markdown (rendu HTML sécurisé, collapsibles `<details>`)
