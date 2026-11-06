@@ -117,6 +117,8 @@ const ICON_FALLBACK = {
   react: "React-Dark", js: "JavaScript", ts: "TypeScript", html: "HTML", css: "CSS",
   nodejs: "NodeJS-Dark", nestjs: "NestJS-Dark", express: "ExpressJS-Dark", php: "PHP-Dark",
   mysql: "MySQL-Dark", postgres: "PostgreSQL-Dark", c: "C", docker: "Docker", git: "Git", github: "Github-Dark",
+  tailwind: "TailwindCSS-Dark", htmx: "Htmx-Dark", cloudflare: "Cloudflare-Dark", debian: "Debian-Dark",
+  githubactions: "GithubActions-Dark", pnpm: "Pnpm-Dark", vscode: "VSCode-Dark", webstorm: "WebStorm-Dark", figma: "Figma-Dark",
 };
 
 async function getIcons(profile) {

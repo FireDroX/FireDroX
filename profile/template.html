@@ -466,6 +466,8 @@ body {
 /* ---------- ajouts du template (contenu injecté) ---------- */
 .chip { display: inline-flex; align-items: center; gap: 6px; }
 .chip .ico { width: 16px; height: 16px; display: block; flex: none; }
+/* stack : une puce par ligne, toute la largeur de la colonne */
+.stack .chips { flex-direction: column; }
 .projects > .proj.wide { grid-column: 1 / -1; }
 .gitfut.has-img {
   background:

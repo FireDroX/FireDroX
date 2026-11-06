@@ -37,38 +37,43 @@
     "title": "Tech Stack",
     "groups": [
       {
-        "name": "Front",
+        "name": "Langages",
         "items": [
-          { "label": "React", "icon": "react" },
           { "label": "JavaScript", "icon": "js" },
           { "label": "TypeScript", "icon": "ts" },
+          { "label": "PHP", "icon": "php" },
           { "label": "HTML", "icon": "html" },
           { "label": "CSS", "icon": "css" }
         ]
       },
       {
-        "name": "Back",
+        "name": "Frameworks",
         "items": [
+          { "label": "React", "icon": "react" },
+          { "label": "Tailwind", "icon": "tailwind" },
           { "label": "Node.js", "icon": "nodejs" },
           { "label": "NestJS", "icon": "nestjs" },
-          { "label": "Express", "icon": "express" },
-          { "label": "PHP", "icon": "php" }
+          { "label": "Express", "icon": "express" }
         ]
       },
       {
-        "name": "Data",
+        "name": "Data & Infra",
         "items": [
           { "label": "MySQL", "icon": "mysql" },
-          { "label": "PostgreSQL", "icon": "postgres" }
+          { "label": "PostgreSQL", "icon": "postgres" },
+          { "label": "Docker", "icon": "docker" },
+          { "label": "Cloudflare", "icon": "cloudflare" },
+          { "label": "GitHub Actions", "icon": "githubactions" }
         ]
       },
       {
-        "name": "Système",
+        "name": "Outils",
         "items": [
-          { "label": "C", "icon": "c" },
-          { "label": "Docker", "icon": "docker" },
           { "label": "Git", "icon": "git" },
-          { "label": "GitHub", "icon": "github" }
+          { "label": "pnpm", "icon": "pnpm" },
+          { "label": "VS Code", "icon": "vscode" },
+          { "label": "WebStorm", "icon": "webstorm" },
+          { "label": "Figma", "icon": "figma" }
         ]
       }
     ]
