@@ -15,6 +15,11 @@ cd profile
 npm ci && npx playwright install chromium && node render.mjs
 ```
 
+Le bloc activité est publié en **`activity.svg` animé** : le panneau capturé en
+PNG sert de fond, et le SVG de `Platane/snk` (recoloré avec la palette jaune /
+cyan) est intégré à la place de la grille. `activity.png` reste disponible en
+version statique.
+
 Les images arrivent dans `profile/out/` (plus `full.png`, aperçu pleine page, et
 `index.html`, la page rendue, à ouvrir dans un navigateur).
 
@@ -25,6 +30,7 @@ Variables utiles :
 | `GITHUB_TOKEN` ou `PROFILE_TOKEN` | jeton pour la grille de contributions réelle (sinon grille d'exemple) |
 | `GITFUT_FILE` | PNG GitFut local (sinon téléchargé depuis la branche `gitfut`) |
 | `CONTRIBUTIONS_FILE` | réponse GraphQL en JSON, pour travailler hors ligne |
+| `SNAKE_FILE` | SVG Platane/snk local (sinon celui publié sur la branche `output`) |
 | `CHROMIUM_PATH` | Chromium déjà installé à utiliser à la place de celui de Playwright |
 
 Une source indisponible (API, GitFut, logo) ne casse pas le rendu : le bloc garde

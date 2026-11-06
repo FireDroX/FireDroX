@@ -4,12 +4,14 @@
   "version": "1.0.0",
   "description": "Rendu PNG du README de profil FireDroX (Playwright + sharp)",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "render": "node render.mjs"
   },
   "dependencies": {
     "playwright": "1.63.0",
-    "sharp": "0.34.5"
+    "sharp": "0.35.5"
   }
 }

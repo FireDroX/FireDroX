@@ -8,6 +8,7 @@
 //   PROFILE_TOKEN / GITHUB_TOKEN  jeton pour l'API GraphQL (PROFILE_TOKEN prioritaire)
 //   GITFUT_FILE                   PNG GitFut local (sinon téléchargé depuis la branche gitfut)
 //   CONTRIBUTIONS_FILE            réponse GraphQL en JSON, pour travailler hors ligne
+//   SNAKE_FILE                    SVG animé Platane/snk (sinon celui déjà publié sur la branche output)
 //   CHROMIUM_PATH                 binaire Chromium à utiliser à la place de celui de Playwright
 //   OUT_DIR                       dossier de sortie (défaut : profile/out)
 
@@ -137,6 +138,38 @@ async function getIcons(profile) {
   return icons;
 }
 
+// Serpent animé Platane/snk, recoloré avec la palette de la maquette. snk expose ses couleurs
+// en variables CSS sur :root : --cs serpent, --ce case mangée, --c0..--c4 niveaux, --cb bordure.
+const SNAKE_PALETTE = {
+  "--cb": "#07070d00", "--cs": "#00e5f2", "--ce": "#191930",
+  "--c0": "#191930", "--c1": "#4d4808", "--c2": "#8f8505", "--c3": "#c9bc02", "--c4": "#f3e600",
+};
+
+async function getSnake() {
+  try {
+    let svg;
+    if (process.env.SNAKE_FILE) svg = await readFile(process.env.SNAKE_FILE, "utf8");
+    else svg = await (await fetchWithTimeout(`${RAW}/github-snake-dark.svg`)).text();
+    const open = svg.match(/^\s*<svg\b([^>]*)>/);
+    const vb = open && open[1].match(/viewBox="([^"]+)"/);
+    if (!vb || !svg.trimEnd().endsWith("</svg>")) throw new Error("SVG snk inattendu");
+    const viewBox = vb[1].trim().split(/[\s,]+/).map(Number);
+    let inner = svg.slice(open[0].length, svg.lastIndexOf("</svg>"));
+    let themed = 0;
+    inner = inner.replace(/:root\s*\{([^}]*)\}/, (_, body) => ":root{" + body.replace(/(--c[a-z0-9]+)\s*:\s*[^;}]+/g, (m, name) => {
+      if (!(name in SNAKE_PALETTE)) return m;
+      themed++;
+      return `${name}:${SNAKE_PALETTE[name]}`;
+    }) + "}");
+    if (!themed) warn("Palette du serpent non reconnue : couleurs d'origine de snk conservées.");
+    console.log(`serpent : ${Math.round(svg.length / 1024)} Ko, viewBox ${viewBox.join(" ")}`);
+    return { viewBox, inner };
+  } catch (e) {
+    warn(`Serpent animé indisponible (${e.message}) : activity.svg reprend la grille statique.`);
+    return null;
+  }
+}
+
 // ---------------------------------------------------------------- rendu
 
 function inject(template, profile, data) {
@@ -169,10 +202,36 @@ async function capture(page, selector, file) {
   const kb = Math.round(png.length / 1024);
   console.log(`  ${file.padEnd(28)} ${clip.width}×${clip.height}  ${kb} Ko`);
   if (png.length > MAX_BYTES) warn(`${file} pèse ${kb} Ko (> 300 Ko).`);
-  return { file, width: clip.width, height: clip.height };
+  return { file, width: clip.width, height: clip.height, clip, png };
 }
 
-async function render(html, profile) {
+// activity.svg : le panneau (PNG, sans la grille) en fond + le SVG snk animé à la place du canvas
+async function captureAnimatedActivity(page, snake, staticShot) {
+  let bg = staticShot.png, w = staticShot.width, h = staticShot.height, overlay = "";
+  if (snake) {
+    const [, , vbW, vbH] = snake.viewBox;
+    await page.evaluate((ratio) => {
+      const cv = document.getElementById("contrib");
+      const slot = document.createElement("div");
+      slot.id = "snake-slot";
+      slot.style.cssText = `width:100%;aspect-ratio:${ratio}`;
+      cv.replaceWith(slot);
+    }, vbW / vbH);
+    await page.setViewportSize({ width: 880, height: await page.evaluate(() => Math.ceil(document.documentElement.scrollHeight)) });
+    const shot = await capture(page, "#block-activity", "activity-bg.png");
+    const slot = await page.locator("#snake-slot").boundingBox();
+    ({ png: bg, width: w, height: h } = shot);
+    const r = (n) => Math.round(n * 100) / 100;
+    overlay = `<svg x="${r(slot.x - shot.clip.x)}" y="${r(slot.y - shot.clip.y)}" width="${r(slot.width)}" height="${r(slot.height)}" viewBox="${snake.viewBox.join(" ")}">${snake.inner}</svg>`;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`
+    + `<image width="${w}" height="${h}" href="data:image/png;base64,${bg.toString("base64")}"/>${overlay}</svg>`;
+  await writeFile(path.join(OUT, "activity.svg"), svg);
+  console.log(`  ${"activity.svg".padEnd(28)} ${w}×${h}  ${Math.round(svg.length / 1024)} Ko${snake ? " (serpent animé)" : " (statique)"}`);
+  return { file: "activity.svg", width: w, height: h };
+}
+
+async function render(html, profile, snake) {
   const htmlPath = path.join(OUT, "index.html");
   await writeFile(htmlPath, html);
 
@@ -214,6 +273,8 @@ async function render(html, profile) {
     for (const l of profile.links.items) shots.links.push(await capture(page, `#port-${l.id}`, `link-${l.id}.png`));
     // aperçu pleine page (utile en local, publié aussi pour débogage)
     await writeFile(path.join(OUT, "full.png"), await compress(await page.screenshot({ fullPage: true })));
+    // en dernier : remplacer le canvas modifie la mise en page
+    shots.activitySvg = await captureAnimatedActivity(page, snake, shots.activity);
     return shots;
   } finally {
     await browser.close();
@@ -252,7 +313,7 @@ function readme(profile, shots, version) {
     block(link(P.about.link, img(shots.about, about))),
     block(img(shots.stack, stack)),
     ...projectRows.map((r) => block(...r)),
-    block(link(P.activity.link, img(shots.activity, `${P.activity.title} — grille des contributions GitHub de ${P.login} sur 12 mois, avec le serpent`))),
+    block(link(P.activity.link, img(shots.activitySvg, `${P.activity.title} — grille des contributions GitHub de ${P.login} sur 12 mois, avec le serpent`))),
     block(...P.links.items.map((l, i) => link(l.url, img(shots.links[i], `${l.label} — ${l.display}`)))),
     "",
   ].join("\n\n").replace(/\n{3,}/g, "\n\n");
@@ -270,13 +331,13 @@ async function main() {
   await rm(OUT, { recursive: true, force: true });
   await mkdir(OUT, { recursive: true });
 
-  const [contributions, gitfut, icons] = await Promise.all([
-    getContributions(profile.login), getGitfut(profile.login), getIcons(profile),
+  const [contributions, gitfut, icons, snake] = await Promise.all([
+    getContributions(profile.login), getGitfut(profile.login), getIcons(profile), getSnake(),
   ]);
   const data = { stamp: buildStamp(), contributions, gitfut, icons };
   console.log(`build : ${data.stamp}`);
 
-  const shots = await render(inject(template, profile, data), profile);
+  const shots = await render(inject(template, profile, data), profile, snake);
 
   // ?v= ne dépend que du contenu éditable : le README ne change que si profile.json ou le template changent
   const version = createHash("sha256").update(template).update(JSON.stringify(profile)).digest("hex").slice(0, 10);

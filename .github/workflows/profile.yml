@@ -1,10 +1,10 @@
 # Profil GitHub cyberpunk : un seul workflow, trois jobs.
 #
 #   snake ─┐
-#          ├─▶ render ─▶ branche « output » (PNG du README + SVG du serpent)
+#          ├─▶ render ─▶ branche « output » (PNG + activity.svg animé + SVG du serpent)
 #   gitfut ┘
 #
-# - snake  : serpent animé Platane/snk (utilisé par l'ancien README, branche legacy-readme)
+# - snake  : serpent animé Platane/snk, intégré dans activity.svg (et utilisé par l'ancien README, branche legacy-readme)
 # - gitfut : carte GitFut (gitfut.com, ou GitFut lancé localement en secours) → branche « gitfut »
 # - render : profile/render.mjs capture chaque bloc de profile/template.html en PNG
 #
@@ -215,6 +215,10 @@ jobs:
           if [ -f "$RUNNER_TEMP/gitfut/FireDroX.png" ]; then
             export GITFUT_FILE="$RUNNER_TEMP/gitfut/FireDroX.png"
           fi
+          # serpent animé du jour, recoloré et intégré dans activity.svg
+          if [ -f "$RUNNER_TEMP/snake/github-snake-dark.svg" ]; then
+            export SNAKE_FILE="$RUNNER_TEMP/snake/github-snake-dark.svg"
+          fi
           node render.mjs
 
       - uses: actions/upload-artifact@v4
@@ -232,7 +236,7 @@ jobs:
           set -euo pipefail
           SITE="$RUNNER_TEMP/site"
           mkdir -p "$SITE"
-          cp out/*.png "$SITE/"
+          cp out/*.png out/activity.svg "$SITE/"
           if ls "$RUNNER_TEMP"/snake/*.svg > /dev/null 2>&1; then
             cp "$RUNNER_TEMP"/snake/*.svg "$SITE/"
           elif git fetch --depth 1 origin output 2>/dev/null; then
