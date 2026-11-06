@@ -1,85 +1,16 @@
-<h1 align="center">Hello There !</h1>
-<h3 align="center"><a href="https://github.com/FireDroX">@FireDroX</a> - Développeur Full-Stack · Étudiant · Ouvert aux opportunités 🚀</h3>
+<!-- Généré par .github/workflows/profile.yml — modifier profile/profile.json -->
 
----
+<!-- Ce fichier est réécrit par `node profile/render.mjs --readme` : ne pas l'éditer à la main. -->
 
-## 🚀 À propos de moi
+<p align="center"><a href="https://portfolio.addrien.fr/?utm_source=github"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/hero.png?v=f4f962123b" width="100.0%" alt="Hello There ! @FireDroX — Développeur Full-Stack, étudiant, ouvert aux opportunités"></a></p>
 
-<table border="0">
-  <tr>
-    <td align="left" valign="middle">
-      <ul> 
-        <li>🔭 Actuellement à la recherche d'une <strong>opportunité professionnelle</strong></li>
-        <li>🌱 J'apprends et j'améliore continuellement mes compétences</li>
-        <li>💡 Passionné par la création d'applications web complètes, du cahier des charges jusqu'à la mise en prod</li>
-        <li>🎯 Objectif : travailler sur des projets concrets, ambitieux et scalables</li>
-        <li>🧩 J'aime construire des systèmes "de A à Z" : auth, rôles, API, dashboards, bots Discord...</li>
-      <ul>
-    </td>
-    <td align="right" valign="middle">
-      <a href="https://gitfut.com/FireDroX">
-        <img
-          src="https://raw.githubusercontent.com/FireDroX/FireDroX/gitfut/FireDroX.png"
-          alt="GitFut"
-          height="150"
-        />
-      </a>
-    </td>
-  </tr>
-</table>
+<p align="center"><a href="https://gitfut.com/FireDroX"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/about.png?v=f4f962123b" width="100.0%" alt="À propos de moi — SCAN : Actuellement à la recherche d'une opportunité professionnelle · GROW : J'apprends et j'améliore continuellement mes compétences · IDEA : Passionné par la création d'applications web complètes, du cahier des charges jusqu'à la mise en prod · GOAL : Objectif : travailler sur des projets concrets, ambitieux et scalables · BUILD : J'aime construire des systèmes de A à Z : auth, rôles, API, dashboards, bots Discord… (carte GitFut de FireDroX)"></a></p>
 
----
+<p align="center"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/stack.png?v=f4f962123b" width="100.0%" alt="Tech Stack — Front : React, JavaScript, TypeScript, HTML, CSS · Back : Node.js, NestJS, Express, PHP · Data : MySQL, PostgreSQL · Système : C, Docker, Git, GitHub"></p>
 
-## 🛠️ Tech Stack
+<p align="center"><a href="https://github.com/FireDroX/nestwiki"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/project-nestwiki.png?v=f4f962123b" width="49.8%" alt="Projet NestWiki (github.com/FireDroX/nestwiki) — Wiki collaboratif auto-hébergé (clone de WikiJS) avec gestion de versions, pièces jointes et rôles utilisateurs. Fonctionnalités : Arborescence de pages multi-niveaux avec historique append-only et rollback ; Éditeur Markdown (rendu HTML sécurisé, collapsibles &lt;details&gt;) ; Médias via Minio (S3-compatible), accès par URLs présignées ; Rôles admin / editor / reader, pages publiques ou privées ; Serveur MCP intégré : un assistant IA (Claude) pilote le wiki (pages, recherche, médias, utilisateurs) via des clés API dédiées et un audit log des actions. Technologies : Nest, TypeORM, TypeScript, React, TailwindCSS, shadcn, MySQL, Minio."></a><a href="https://github.com/FireDroX/dynamic-portfolio"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/project-dynamic-portfolio.png?v=f4f962123b" width="49.8%" alt="Projet Dynamic Portfolio (github.com/FireDroX/dynamic-portfolio) — Portfolio dynamique pour héberger et tester des mini-projets web directement en ligne via des iframes, avec panel d'administration sécurisé. Fonctionnalités : Page d'accueil mettant en avant les 3 meilleurs projets ; Catalogue complet + fiche projet avec iframe ; Panel admin protégé : ajout / suppression de projets, upload en .zip ; Page /achievements avec easter eggs. Technologies : React.js, Node.js, Express, MySQL."></a></p>
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=react,js,ts,nodejs,nestjs,express,html,css,php,mysql,postgres,c,docker,git,github&theme=dark" />
-</p>
+<p align="center"><a href="https://github.com/FireDroX"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/activity.png?v=f4f962123b" width="100.0%" alt="Activité — grille des contributions GitHub de FireDroX sur 12 mois, avec le serpent"></a></p>
 
----
+<p align="center"><a href="https://portfolio.addrien.fr/?utm_source=github"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/link-portfolio.png?v=f4f962123b" width="23.5%" alt="Portfolio — portfolio.addrien.fr"></a><a href="https://linkedin.com/in/adrien-pourlier"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/link-linkedin.png?v=f4f962123b" width="23.5%" alt="LinkedIn — in/adrien-pourlier"></a><a href="https://ko-fi.com/G2G01YFONH"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/link-kofi.png?v=f4f962123b" width="23.5%" alt="Ko-fi — ko-fi.com/G2G01YFONH"></a><a href="https://fr.fiverr.com/s/GzV441Z"><img src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/link-fiverr.png?v=f4f962123b" width="23.5%" alt="Fiverr — fr.fiverr.com/s/GzV441Z"></a></p>
 
-## 📌 Projets phares
-
-### 📚 [NestWiki](https://github.com/FireDroX/nestwiki)
-Wiki collaboratif auto-hébergé (clone de WikiJS) avec gestion de versions, pièces jointes et rôles utilisateurs.
-- Arborescence de pages multi-niveaux avec historique append-only et rollback
-- Éditeur Markdown (rendu HTML sécurisé, collapsibles `<details>`)
-- Gestion des médias via Minio (S3-compatible), accès par URLs présignées
-- Rôles `admin` / `editor` / `reader`, pages publiques ou privées
-- Serveur MCP intégré permettant à un assistant IA (Claude) de piloter le wiki (pages, recherche, médias, utilisateurs) via des clés API dédiées et un audit log des actions
-
-`Nest` · `TypeORM` · `TypeScript` · `React` · `TailwindCSS` · `shadcn` · `MySQL` · `Minio`
-
----
- 
-### 🎨 [Dynamic Portfolio](https://github.com/FireDroX/dynamic-portfolio)
-Portfolio dynamique permettant d'héberger et de tester des mini-projets web directement en ligne via des **iframes**, avec panel d'administration sécurisé.
-- Page d'accueil mettant en avant les 3 meilleurs projets
-- Catalogue complet + fiche projet avec iframe
-- Panel admin protégé : ajout / suppression de projets, upload en `.zip`
-- Page `/achievements` avec easter eggs
-
-`React.js` · `Node.js` · `Express` · `MySQL`
-
----
-
-## 🐍 Activité
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/FireDroX/FireDroX/output/github-snake-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/FireDroX/FireDroX/output/github-snake.svg" />
-    <img alt="github-snake" src="https://raw.githubusercontent.com/FireDroX/FireDroX/output/github-snake.svg" />
-  </picture>
-</p>
-
----
- 
-## 🌐 Me retrouver
- 
-<p align="center">
-  <a href="https://portfolio.addrien.fr/?utm_source=github"><img src="https://img.shields.io/badge/Portfolio-b29a80?style=for-the-badge&logo=react&logoColor=white" /></a>
-  <a href="https://linkedin.com/in/adrien-pourlier"><img src="https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin-white&logoColor=fff" /></a>
-  <a href="https://ko-fi.com/G2G01YFONH"><img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" /></a>
-  <a href="https://fr.fiverr.com/s/GzV441Z"><img src="https://img.shields.io/badge/Fiverr-00b22d?style=for-the-badge&logo=fiverr&logoColor=white" /></a>
-</p>

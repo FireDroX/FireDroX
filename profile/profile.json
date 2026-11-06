@@ -1,0 +1,128 @@
+{
+  "login": "FireDroX",
+
+  "sysbar": {
+    "path": ["ADDRIEN.FR", "PORTFOLIO", "WIKI"],
+    "status": "Ouvert aux opportunités"
+  },
+
+  "hero": {
+    "title": "Hello There !",
+    "handle": "@FireDroX",
+    "roles": ["Développeur **Full-Stack**", "Étudiant", "Ouvert aux opportunités"],
+    "link": "https://portfolio.addrien.fr/?utm_source=github",
+    "alt": "Hello There ! @FireDroX — Développeur Full-Stack, étudiant, ouvert aux opportunités"
+  },
+
+  "about": {
+    "tag": "WHOAMI",
+    "title": "À propos de moi",
+    "link": "https://gitfut.com/FireDroX",
+    "items": [
+      { "k": "SCAN", "text": "Actuellement à la recherche d'une **opportunité professionnelle**" },
+      { "k": "GROW", "text": "J'apprends et j'améliore continuellement mes compétences" },
+      { "k": "IDEA", "text": "Passionné par la création d'applications web complètes, du cahier des charges jusqu'à la mise en prod" },
+      { "k": "GOAL", "text": "Objectif : travailler sur des projets concrets, ambitieux et scalables" },
+      { "k": "BUILD", "text": "J'aime construire des systèmes de A à Z : auth, rôles, API, dashboards, bots Discord…" }
+    ],
+    "gitfut": {
+      "placeholder": "FD",
+      "name": "FireDroX",
+      "note": "gitfut.png · injectée au build"
+    }
+  },
+
+  "stack": {
+    "tag": "LOADOUT",
+    "title": "Tech Stack",
+    "groups": [
+      {
+        "name": "Front",
+        "items": [
+          { "label": "React", "icon": "react" },
+          { "label": "JavaScript", "icon": "js" },
+          { "label": "TypeScript", "icon": "ts" },
+          { "label": "HTML", "icon": "html" },
+          { "label": "CSS", "icon": "css" }
+        ]
+      },
+      {
+        "name": "Back",
+        "items": [
+          { "label": "Node.js", "icon": "nodejs" },
+          { "label": "NestJS", "icon": "nestjs" },
+          { "label": "Express", "icon": "express" },
+          { "label": "PHP", "icon": "php" }
+        ]
+      },
+      {
+        "name": "Data",
+        "items": [
+          { "label": "MySQL", "icon": "mysql" },
+          { "label": "PostgreSQL", "icon": "postgres" }
+        ]
+      },
+      {
+        "name": "Système",
+        "items": [
+          { "label": "C", "icon": "c" },
+          { "label": "Docker", "icon": "docker" },
+          { "label": "Git", "icon": "git" },
+          { "label": "GitHub", "icon": "github" }
+        ]
+      }
+    ]
+  },
+
+  "projects": [
+    {
+      "slug": "nestwiki",
+      "title": "Nest**Wiki**",
+      "repo": "FireDroX/nestwiki",
+      "description": "Wiki collaboratif auto-hébergé (clone de WikiJS) avec gestion de versions, pièces jointes et rôles utilisateurs.",
+      "features": [
+        "Arborescence de pages multi-niveaux avec historique append-only et rollback",
+        "Éditeur Markdown (rendu HTML sécurisé, collapsibles `<details>`)",
+        "Médias via Minio (S3-compatible), accès par URLs présignées",
+        "Rôles `admin` / `editor` / `reader`, pages publiques ou privées",
+        "Serveur MCP intégré : un assistant IA (Claude) pilote le wiki (pages, recherche, médias, utilisateurs) via des clés API dédiées et un audit log des actions"
+      ],
+      "tags": ["Nest", "TypeORM", "TypeScript", "React", "TailwindCSS", "shadcn", "MySQL", "Minio"]
+    },
+    {
+      "slug": "dynamic-portfolio",
+      "title": "Dynamic **Portfolio**",
+      "repo": "FireDroX/dynamic-portfolio",
+      "description": "Portfolio dynamique pour héberger et tester des mini-projets web directement en ligne via des **iframes**, avec panel d'administration sécurisé.",
+      "features": [
+        "Page d'accueil mettant en avant les 3 meilleurs projets",
+        "Catalogue complet + fiche projet avec iframe",
+        "Panel admin protégé : ajout / suppression de projets, upload en `.zip`",
+        "Page `/achievements` avec easter eggs"
+      ],
+      "tags": ["React.js", "Node.js", "Express", "MySQL"]
+    }
+  ],
+
+  "activity": {
+    "tag": "UPLINK",
+    "title": "Activité",
+    "link": "https://github.com/FireDroX"
+  },
+
+  "links": {
+    "tag": "PORTS",
+    "title": "Me retrouver",
+    "items": [
+      { "id": "portfolio", "label": "Portfolio", "url": "https://portfolio.addrien.fr/?utm_source=github", "display": "portfolio.addrien.fr", "color": "yellow" },
+      { "id": "linkedin", "label": "LinkedIn", "url": "https://linkedin.com/in/adrien-pourlier", "display": "in/adrien-pourlier", "color": "cyan" },
+      { "id": "kofi", "label": "Ko-fi", "url": "https://ko-fi.com/G2G01YFONH", "display": "ko-fi.com/G2G01YFONH", "color": "magenta" },
+      { "id": "fiverr", "label": "Fiverr", "url": "https://fr.fiverr.com/s/GzV441Z", "display": "fr.fiverr.com/s/GzV441Z", "color": "#c7c4dc" }
+    ]
+  },
+
+  "footer": {
+    "left": "// généré par github-actions · ne pas éditer à la main",
+    "right": "addrien.fr ▮ FireDroX/FireDroX"
+  }
+}

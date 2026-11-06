@@ -1,0 +1,252 @@
+# Profil GitHub cyberpunk : un seul workflow, trois jobs.
+#
+#   snake ─┐
+#          ├─▶ render ─▶ branche « output » (PNG du README + SVG du serpent)
+#   gitfut ┘
+#
+# - snake  : serpent animé Platane/snk (utilisé par l'ancien README, branche legacy-readme)
+# - gitfut : carte GitFut (gitfut.com, ou GitFut lancé localement en secours) → branche « gitfut »
+# - render : profile/render.mjs capture chaque bloc de profile/template.html en PNG
+#
+# Le contenu se modifie dans profile/profile.json. Rien n'est jamais commité sur main.
+
+name: Profil cyberpunk
+
+on:
+  schedule:
+    - cron: "50 4 * * *" # ≈ 5 h 50 (hiver) / 6 h 50 (été), heure de Paris
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "profile/**"
+      - ".github/workflows/profile.yml"
+  # sur une PR : rendu de contrôle téléchargeable en artefact, aucune publication
+  pull_request:
+    paths:
+      - "profile/**"
+      - ".github/workflows/profile.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-render-${{ github.event_name == 'pull_request' && github.ref || 'publish' }}
+  cancel-in-progress: false
+
+env:
+  GH_USER: FireDroX
+  PUBLISH: ${{ github.event_name != 'pull_request' }}
+
+jobs:
+  snake:
+    name: Serpent (Platane/snk)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ env.GH_USER }}
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: snake
+          path: dist/
+          retention-days: 3
+
+  gitfut:
+    name: Carte GitFut
+    runs-on: ubuntu-latest
+    env:
+      OUTPUT_FILE: /tmp/gitfut/FireDroX.png
+      GITFUT_REPOSITORY: https://github.com/Younesfdj/gitfut.git
+    steps:
+      # 1re tentative : l'image officielle de gitfut.com
+      - name: Télécharger depuis gitfut.com
+        id: official
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$OUTPUT_FILE")"
+          curl --fail --location --silent --show-error \
+            --connect-timeout 10 --max-time 30 --retry 2 \
+            "https://gitfut.com/${GH_USER}.png" --output "$OUTPUT_FILE.tmp"
+          test "$(file --brief --mime-type "$OUTPUT_FILE.tmp")" = image/png
+          mv "$OUTPUT_FILE.tmp" "$OUTPUT_FILE"
+          echo "Image récupérée depuis gitfut.com."
+
+      # Secours : construire et lancer GitFut localement
+      - name: Installer Node.js (secours)
+        if: steps.official.outcome == 'failure'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Générer avec GitFut local (secours)
+        id: local
+        if: steps.official.outcome == 'failure'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEXT_TELEMETRY_DISABLED: 1
+          PORT: 3000
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$OUTPUT_FILE")"
+          git clone --depth 1 "$GITFUT_REPOSITORY" "$RUNNER_TEMP/gitfut-src"
+          cd "$RUNNER_TEMP/gitfut-src"
+          npm ci
+          npm run build
+          npm start > "$RUNNER_TEMP/gitfut.log" 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 45); do
+            curl --fail --silent --output /dev/null http://127.0.0.1:3000/ && break
+            echo "Attente du serveur GitFut (${attempt}/45)"; sleep 2
+          done
+          curl --fail --location --silent --show-error --max-time 120 \
+            "http://127.0.0.1:3000/${GH_USER}.png" --output "$OUTPUT_FILE.tmp" \
+            || { cat "$RUNNER_TEMP/gitfut.log"; exit 1; }
+          test "$(file --brief --mime-type "$OUTPUT_FILE.tmp")" = image/png
+          mv "$OUTPUT_FILE.tmp" "$OUTPUT_FILE"
+          echo "Image générée localement."
+
+      - name: Carte disponible ?
+        id: card
+        run: |
+          if [ -f "$OUTPUT_FILE" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::GitFut indisponible (officiel et local) : le rendu réutilisera la carte de la branche gitfut."
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: steps.card.outputs.ok == 'true'
+        with:
+          name: gitfut
+          path: ${{ env.OUTPUT_FILE }}
+          retention-days: 3
+
+      # La branche gitfut ne contient que FireDroX.png (utilisée par l'ancien README et par le rendu en secours)
+      - uses: actions/checkout@v4
+        if: env.PUBLISH == 'true' && steps.card.outputs.ok == 'true'
+        with:
+          fetch-depth: 1
+
+      - name: Publier sur la branche gitfut
+        if: env.PUBLISH == 'true' && steps.card.outputs.ok == 'true'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch --depth 1 origin gitfut 2>/dev/null; then
+            git switch --force-create gitfut FETCH_HEAD
+          else
+            git switch --orphan gitfut
+          fi
+          git rm -rf --quiet --ignore-unmatch .
+          git clean -fdxq
+          cp "$OUTPUT_FILE" "./${GH_USER}.png"
+          git add -A
+          if git diff --cached --quiet; then echo "Carte inchangée."; exit 0; fi
+          git commit -m "chore: update GitFut image"
+          git push origin gitfut
+
+  render:
+    name: Rendu du profil
+    needs: [snake, gitfut]
+    # le rendu tourne même si le serpent ou GitFut ont échoué (render.mjs a ses propres secours)
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: profile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: profile/package-lock.json
+
+      - run: npm ci
+
+      - name: Version de Playwright
+        id: pw
+        run: echo "version=$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache des navigateurs Playwright
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+      - name: Installer Chromium
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Dépendances système de Chromium
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: gitfut
+          path: ${{ runner.temp }}/gitfut
+
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: snake
+          path: ${{ runner.temp }}/snake
+
+      - name: Rendre les PNG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # facultatif : PAT qui compte aussi les contributions privées (voir profile/README.md)
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
+        run: |
+          if [ -f "$RUNNER_TEMP/gitfut/FireDroX.png" ]; then
+            export GITFUT_FILE="$RUNNER_TEMP/gitfut/FireDroX.png"
+          fi
+          node render.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: profile-render
+          path: profile/out/
+          retention-days: 7
+
+      # Un seul commit orphelin force-poussé : la branche ne grossit pas d'un jour à l'autre
+      - name: Publier sur la branche output
+        if: env.PUBLISH == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          SITE="$RUNNER_TEMP/site"
+          mkdir -p "$SITE"
+          cp out/*.png "$SITE/"
+          if ls "$RUNNER_TEMP"/snake/*.svg > /dev/null 2>&1; then
+            cp "$RUNNER_TEMP"/snake/*.svg "$SITE/"
+          elif git fetch --depth 1 origin output 2>/dev/null; then
+            echo "::warning::Serpent non régénéré : reprise des SVG de la branche output."
+            for f in github-snake.svg github-snake-dark.svg; do
+              git show "FETCH_HEAD:$f" > "$SITE/$f" 2>/dev/null || rm -f "$SITE/$f"
+            done
+          fi
+          cd "$SITE"
+          git init --quiet --initial-branch output
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit --quiet -m "chore: rendu du profil $(TZ=Europe/Paris date +%Y.%m.%d)"
+          git push --force --quiet \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" output
+          echo "Publié : $(ls | tr '\n' ' ')"
