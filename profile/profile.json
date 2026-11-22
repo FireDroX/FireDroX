@@ -84,28 +84,37 @@
       "slug": "nestwiki",
       "title": "Nest**Wiki**",
       "repo": "FireDroX/nestwiki",
-      "description": "Wiki collaboratif auto-hébergé (clone de WikiJS) avec gestion de versions, pièces jointes et rôles utilisateurs.",
+      "description": "Wiki auto-hébergé avec versions, pièces jointes et rôles.",
       "features": [
-        "Arborescence de pages multi-niveaux avec historique append-only et rollback",
-        "Éditeur Markdown (rendu HTML sécurisé, collapsibles `<details>`)",
-        "Médias via Minio (S3-compatible), accès par URLs présignées",
-        "Rôles `admin` / `editor` / `reader`, pages publiques ou privées",
-        "Serveur MCP intégré : un assistant IA (Claude) pilote le wiki (pages, recherche, médias, utilisateurs) via des clés API dédiées et un audit log des actions"
+        "Pages imbriquées, historique et rollback",
+        "Médias S3 en URLs présignées",
+        "Serveur **MCP** piloté par Claude"
       ],
-      "tags": ["Nest", "TypeORM", "TypeScript", "React", "TailwindCSS", "shadcn", "MySQL", "Minio"]
+      "tags": ["NestJS", "React", "TypeScript", "MySQL", "Minio"]
     },
     {
       "slug": "dynamic-portfolio",
       "title": "Dynamic **Portfolio**",
       "repo": "FireDroX/dynamic-portfolio",
-      "description": "Portfolio dynamique pour héberger et tester des mini-projets web directement en ligne via des **iframes**, avec panel d'administration sécurisé.",
+      "description": "Portfolio qui héberge et fait tester des mini-projets web en **iframe**.",
       "features": [
-        "Page d'accueil mettant en avant les 3 meilleurs projets",
-        "Catalogue complet + fiche projet avec iframe",
-        "Panel admin protégé : ajout / suppression de projets, upload en `.zip`",
-        "Page `/achievements` avec easter eggs"
+        "Top 3, catalogue et fiches projet",
+        "Admin : projets ajoutés en `.zip`",
+        "`/achievements` et easter eggs"
       ],
-      "tags": ["React.js", "Node.js", "Express", "MySQL"]
+      "tags": ["React", "Node.js", "Express", "MySQL"]
+    },
+    {
+      "slug": "urls",
+      "title": "**URL**s",
+      "repo": "FireDroX/urls",
+      "description": "Raccourcisseur d'URL et partage de fichiers, sous un seul compte.",
+      "features": [
+        "Redirections `/r/` avec stats",
+        "Partage `/d/` et dépôt `/u/` via S3",
+        "Tags, dossiers, audit, Turnstile"
+      ],
+      "tags": ["NestJS", "React", "TypeScript", "MySQL", "RustFS"]
     }
   ],
 

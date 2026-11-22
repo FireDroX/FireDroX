@@ -321,72 +321,84 @@ body {
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
 }
 
-/* ---------- projets ---------- */
-.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.proj .in { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+/* ---------- projets (cartes compactes, jusqu'à 3 par ligne) ---------- */
+.projects { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 18px; }
+.proj { --acc: var(--cyan); --acc-soft: rgba(0,229,242,0.35); --cut: 14px; }
+.proj.y { --acc: var(--yellow); --acc-soft: rgba(243,230,0,0.35); }
+.proj.m { --edge: var(--magenta); --acc: var(--magenta); --acc-soft: rgba(255,42,109,0.4); }
+.proj .in {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  height: 100%;
+  padding: 16px 18px 16px;
+  background: radial-gradient(120% 60% at 100% 0%, color-mix(in srgb, var(--acc) 9%, transparent), transparent 60%), var(--panel);
+}
 .proj .repo {
   font-family: var(--f-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--muted);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.proj .repo b { color: var(--cyan); font-weight: 600; }
+.proj .repo b { color: var(--acc); font-weight: 600; }
 .proj h3 {
-  margin: -6px 0 0;
+  margin: -2px 0 0;
   font-family: var(--f-display);
   font-weight: 900;
-  font-size: 28px;
+  font-size: 22px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text);
   line-height: 1.05;
 }
-.proj.alt h3 { color: var(--text); }
-.proj h3 span { color: var(--yellow); }
-.proj.alt h3 span { color: var(--cyan); }
-.proj p { margin: 0; color: var(--text); }
-.proj p strong { color: var(--yellow); font-weight: 600; }
+.proj h3 span { color: var(--acc); }
+.proj p { margin: 0; font-size: 13.5px; line-height: 1.45; color: var(--text); }
+.proj p strong { color: var(--acc); font-weight: 600; }
+.feat strong { color: var(--text); font-weight: 600; }
 .feat {
   list-style: none;
-  margin: 0;
+  margin: 2px 0 0;
   padding: 0;
   display: grid;
-  gap: 6px;
-  font-size: 14px;
+  gap: 5px;
+  font-size: 12.5px;
+  line-height: 1.4;
   color: var(--muted);
 }
-.feat li { padding-left: 16px; position: relative; }
+.feat li { padding-left: 14px; position: relative; }
 .feat li::before {
   content: "";
   position: absolute;
-  left: 0; top: 0.62em;
-  width: 7px; height: 7px;
-  background: var(--magenta);
+  left: 0; top: 0.5em;
+  width: 6px; height: 6px;
+  background: var(--acc);
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 .feat code, .proj p code {
   font-family: var(--f-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--cyan);
   background: rgba(0,229,242,0.08);
-  padding: 0 4px;
+  padding: 0 3px;
 }
 .tags {
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px dashed var(--line);
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 .tags span {
   font-family: var(--f-mono);
-  font-size: 11px;
-  padding: 2px 7px;
-  color: var(--yellow);
-  border: 1px solid rgba(243,230,0,0.35);
+  font-size: 10.5px;
+  padding: 1px 6px;
+  color: var(--acc);
+  border: 1px solid var(--acc-soft);
 }
-.proj.alt .tags span { color: var(--cyan); border-color: rgba(0,229,242,0.35); }
 
 /* ---------- activité ---------- */
 .grid-wrap { overflow-x: auto; }
@@ -455,7 +467,7 @@ body {
   .about { grid-template-columns: 1fr; }
   .gitfut { max-width: 200px; margin: 0 auto; }
   .stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .projects { grid-template-columns: 1fr; }
+  .projects { --cols: 1 !important; }
   .links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 440px) {
@@ -468,7 +480,6 @@ body {
 .chip .ico { width: 16px; height: 16px; display: block; flex: none; }
 /* stack : une puce par ligne, toute la largeur de la colonne */
 .stack .chips { flex-direction: column; }
-.projects > .proj.wide { grid-column: 1 / -1; }
 .gitfut.has-img {
   background:
     linear-gradient(160deg, rgba(243,230,0,0.10), transparent 45%),
@@ -589,12 +600,11 @@ html.capture .port .url { white-space: nowrap; }
     }))
   ));
 
-  // ---------- projets (N projets, bordures cyan / jaune en alternance) ----------
-  var n = P.projects.length;
-  card.appendChild(h("div.projects", null, P.projects.map(function (p, i) {
-    var cls = (i % 2 === 0 ? "c.proj" : "y.proj.alt") + (i === n - 1 && n % 2 === 1 && n > 1 ? ".wide" : "");
-    return panel(cls, "block-project-" + p.slug,
-      h("div.repo", null, "github.com/", h("b", null, p.repo)),
+  // ---------- projets (jusqu'à 3 par ligne, bordures cyan / jaune / magenta en alternance) ----------
+  var ACCENTS = ["c", "y", "m"];
+  card.appendChild(h("div.projects", { style: "--cols: " + (D.projectCols || 2) }, P.projects.map(function (p, i) {
+    return panel(ACCENTS[i % ACCENTS.length] + ".proj", "block-project-" + p.slug,
+      h("div.repo", null, "gh ▸ ", h("b", null, p.repo)),
       h("h3", null, md(p.title, "span")),
       h("p", null, md(p.description)),
       h("ul.feat", null, p.features.map(function (f) { return h("li", null, md(f)); })),

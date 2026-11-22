@@ -73,8 +73,9 @@ Ajouter une entrée dans `projects` :
 
 - `slug` : `a-z`, `0-9`, `-` ; il donne le fichier `project-<slug>.png`.
 - La partie en `**gras**` du titre prend la couleur d'accent.
-- Les bordures alternent cyan / jaune ; avec un nombre impair de projets, le
-  dernier prend toute la largeur.
+- Cartes compactes, 3 par ligne (2 par ligne pour 2 ou 4 projets) : garder une
+  description d'une ou deux lignes, 3 fonctionnalités courtes et 4–5 tags.
+- Les bordures alternent cyan / jaune / magenta.
 
 Puis `node render.mjs --readme` et committer.
 
