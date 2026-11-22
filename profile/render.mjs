@@ -174,6 +174,12 @@ async function getSnake() {
 
 // ---------------------------------------------------------------- rendu
 
+// colonnes de projets : 3 par ligne au plus, 2 pour 2 ou 4 projets (lignes pleines)
+function projectCols(n) {
+  if (n <= 1) return 1;
+  return n === 2 || n === 4 ? 2 : 3;
+}
+
 function inject(template, profile, data) {
   // JSON dans un <script> : on neutralise « < » pour qu'aucun texte ne puisse fermer la balise
   const safe = (v) => JSON.stringify(v).replace(/</g, "\\u003c");
@@ -299,12 +305,13 @@ function readme(profile, shots, version) {
   const about = `${P.about.title} — ` + P.about.items.map((i) => `${i.k} : ${plain(i.text)}`).join(" · ") + ` (carte GitFut de ${P.login})`;
   const stack = `${P.stack.title} — ` + P.stack.groups.map((g) => `${g.name} : ${g.items.map((i) => i.label).join(", ")}`).join(" · ");
 
-  // projets par lignes de deux : images collées (aucun espace entre les <a>) pour qu'elles tiennent sur une ligne
+  // projets par lignes de projectCols : images collées (aucun espace entre les <a>) pour qu'elles tiennent sur une ligne
+  const cols = projectCols(P.projects.length);
   const projectRows = [];
   P.projects.forEach((p, i) => {
     const alt = `Projet ${plain(p.title)} (github.com/${p.repo}) — ${plain(p.description)} Fonctionnalités : ${p.features.map(plain).join(" ; ")}. Technologies : ${p.tags.join(", ")}.`;
     const html = link(`https://github.com/${p.repo}`, img(shots.projects[i], alt));
-    if (i % 2 === 0) projectRows.push([html]); else projectRows[projectRows.length - 1].push(html);
+    if (i % cols === 0) projectRows.push([html]); else projectRows[projectRows.length - 1].push(html);
   });
 
   return [
@@ -336,7 +343,7 @@ async function main() {
   const [contributions, gitfut, icons, snake] = await Promise.all([
     getContributions(profile.login), getGitfut(profile.login), getIcons(profile), getSnake(),
   ]);
-  const data = { stamp: buildStamp(), contributions, gitfut, icons };
+  const data = { stamp: buildStamp(), contributions, gitfut, icons, projectCols: projectCols(profile.projects.length) };
   console.log(`build : ${data.stamp}`);
 
   const shots = await render(inject(template, profile, data), profile, snake);
